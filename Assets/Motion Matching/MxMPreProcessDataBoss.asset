@@ -876,6 +876,152 @@ MonoBehaviour:
   m_targetPreProcessData: {fileID: 11400000}
   m_targetAnimModule: {fileID: 0}
   m_targetPrefab: {fileID: 100096, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
+--- !u!114 &-2138209510266931844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e0c90096ff9a54bb00ca4e068031a7, type: 3}
+  m_Name: BossPhantomAttack_comp
+  m_EditorClassIdentifier: 
+  CompositeName: 
+  PrimaryClip: {fileID: -1127549396137376381, guid: ee8700abdecdd4706acab51cfa51d861, type: 3}
+  BeforeClips: []
+  AfterClips: []
+  Looping: 0
+  IgnoreEdges: 0
+  ExtrapolateTrajectory: 1
+  FlattenTrajectory: 1
+  RuntimeSplicing: 0
+  GlobalTags: 0
+  GlobalFavourTags: 0
+  TagTracks: []
+  FavourTagTracks: []
+  Events:
+  - EventId: 28
+    EventName: BossPhantomAttack
+    EventTime: 1.1891268
+    Windup: 0.95030487
+    Actions:
+    - 0.23882198
+    FollowThrough: 0.21891654
+    Recovery: 0.12529004
+    Contacts:
+    - Position: {x: 0, y: 0, z: 0}
+      RotationY: 0
+  LeftFootStepTrack:
+    m_trackId: 0
+    m_trackName: Footstep Left
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+    m_footStepData: []
+  RightFootStepTrack:
+    m_trackId: 1
+    m_trackName: Footstep Right
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+    m_footStepData: []
+  WarpPositionTrack:
+    m_trackId: 2
+    m_trackName: Disable Warp (Position)
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+  WarpRotationTrack:
+    m_trackId: 3
+    m_trackName: Disable Warp (Rotation)
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+  EnableRootMotionTrack:
+    m_trackId: 4
+    m_trackName: Disable Matching
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+  PoseFavourTrack:
+    m_trackId: 5
+    m_trackName: Pose Favour
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+    m_values: []
+    m_defaultValue: 1
+  WarpTrajLatTrack:
+    m_trackId: 6
+    m_trackName: Disable Trajectory Warp (Angular)
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+  WarpTrajLongTrack:
+    m_trackId: 7
+    m_trackName: Disable Trajectory Warp (Long)
+    m_clipLength: 1.5333334
+    m_tagPositions: []
+  UserBoolTracks: []
+  RuntimePlaybackSpeed: 1
+  UseSpeedMods: 0
+  MotionModifier:
+    MotionSections:
+    - MotionSectionId: 0
+      MotionPresetId: 0
+      ModType: 0
+      SmoothType: 0
+      RawModValue: 1
+      UsePresets: 1
+      EndTime: 1.5333334
+  GeneratedClip: {fileID: 0}
+  GeneratedTagTracks: []
+  GeneratedFavourTagTracks: []
+  GeneratedEvents: []
+  GeneratedLeftFootStepTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+    m_footStepData: []
+  GeneratedRightFootStepTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+    m_footStepData: []
+  GeneratedWarpPositionTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+  GeneratedWarpRotationTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+  GeneratedEnableRootMotionTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+  GeneratedPoseFavourTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+    m_values: []
+    m_defaultValue: 0
+  GeneratedWarpTrajLatTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+  GeneratedWarpTrajLongTrack:
+    m_trackId: 0
+    m_trackName: 
+    m_clipLength: 0
+    m_tagPositions: []
+  GeneratedUserBoolTracks: []
+  Curves: []
+  m_targetPreProcessData: {fileID: 11400000}
+  m_targetAnimModule: {fileID: 0}
+  m_targetPrefab: {fileID: 100096, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
 --- !u!114 &-1218702918850397067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,8 +1342,8 @@ MonoBehaviour:
   Events:
   - EventId: 18
     EventName: HitInAir
-    EventTime: 0.82959646
-    Windup: 0.06537424
+    EventTime: 0.74097735
+    Windup: 0.065374255
     Actions:
     - 0.5642222
     FollowThrough: 0.025828123
@@ -1465,6 +1611,7 @@ MonoBehaviour:
     - {fileID: -3177108007652156049}
     - {fileID: -1218702918850397067}
     - {fileID: -5430363274014580163}
+    - {fileID: -2138209510266931844}
     IgnoreEdges_default: 0
     Extrapolate_default: 1
     FlattenTrajectory_default: 1
@@ -1707,12 +1854,12 @@ MonoBehaviour:
   Events:
   - EventId: 8
     EventName: HitUp
-    EventTime: 0.87818664
-    Windup: 0.0036618114
+    EventTime: 0.7140772
+    Windup: 0.0065643564
     Actions:
-    - 0.7745248
+    - 0.61232954
     FollowThrough: 0.031111479
-    Recovery: 0.033459067
+    Recovery: 0.009713292
     Contacts:
     - Position: {x: 0, y: 0, z: 0}
       RotationY: 0
@@ -1997,8 +2144,8 @@ MonoBehaviour:
   TagTracks: []
   FavourTagTracks: []
   Events:
-  - EventId: -1
-    EventName: 
+  - EventId: 23
+    EventName: BossAttack3
     EventTime: 0.59367174
     Windup: 0.39367175
     Actions:

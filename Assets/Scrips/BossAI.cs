@@ -45,7 +45,7 @@ public class BossAI : MonoBehaviour
         if (bossPlayerDistance < 2.0f && isAttacking == false)
         {
             isAttacking = true;
-            bossAttack.OnAttack();
+            bossAttack.OnBossAttack();
             return;
         }
 

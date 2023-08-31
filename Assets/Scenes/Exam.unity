@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.0144034615, g: 0.057880603, b: 0.10578638, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -356,9 +356,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470562780}
+  - component: {fileID: 470562781}
   m_Layer: 0
   m_Name: SomeEvents
-  m_TagString: Untagged
+  m_TagString: MyEventController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -380,6 +381,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &470562781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470562779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c85be7c79fb47248883083fedb7f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNight: 0
+  skyboxDay: {fileID: 2100000, guid: bbe9494f815f3c340956427c884b72a0, type: 2}
+  skyboxNight: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
 --- !u!1 &471573544 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7799612899009355087, guid: caec07eadec6747ddb054efbc52d52f3, type: 3}
@@ -1316,6 +1332,8 @@ MonoBehaviour:
   currentEventId: 0
   weaponColliders: []
   weaponMeshRenderers: []
+  myEventController: {fileID: 0}
+  skyboxChanger: {fileID: 0}
   cameraLookAtController: {fileID: 0}
   testEventDef: {fileID: 11400000, guid: 46cbc23baaa0643f5adc72368cf25100, type: 2}
   heavyAttackTimeLimit: 0.5
@@ -1370,7 +1388,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1163061332}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.14
   m_Height: 1.48
   m_Direction: 1
@@ -1417,15 +1435,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307438088}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.68289137, z: 0.73052, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.362}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 515897377}
   m_Father: {fileID: 10634879}
   m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: -93.86, y: 180, z: 0}
 --- !u!1 &1376328801 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8606816772694974539, guid: 6ae9b89e1b4c44763a60a6223052d3fb, type: 3}
@@ -1633,7 +1651,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1854160839}
+  m_LookAt: {fileID: 1606072609}
   m_Follow: {fileID: 1854160839}
   m_Lens:
     FieldOfView: 50
@@ -1966,6 +1984,8 @@ MonoBehaviour:
   currentEventId: 0
   weaponColliders: []
   weaponMeshRenderers: []
+  myEventController: {fileID: 0}
+  skyboxChanger: {fileID: 0}
   attackEventDefs:
   - {fileID: 11400000, guid: 59e6a3df5e7974caaa85b8c85cf1b94c, type: 2}
   - {fileID: 11400000, guid: 084ac7d3318354b2bbf4b32954f92675, type: 2}
@@ -1974,6 +1994,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 848ceb34a471b44c38af9caa2a7e247d, type: 2}
   - {fileID: 11400000, guid: 44a66d56b01f3412e80848992778213e, type: 2}
   - {fileID: 11400000, guid: 6b150cf2ec0324cb7829ba8abd7d80a9, type: 2}
+  phantomAttackEventDef: {fileID: 11400000, guid: d831f7d26d2e34c008da2f37b38c78be, type: 2}
+  bossPhantomLeft: {fileID: 0}
+  bossPhantomRight: {fileID: 0}
 --- !u!114 &1606072603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,6 +2059,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toAvoid: {fileID: 1163061332}
   avoidDistance: 0.5
+--- !u!4 &1606072609 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02f82bbd1079e41b6a92ece24c3daca5, type: 3}
+  m_PrefabInstance: {fileID: 56519640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1854160838
 GameObject:
   m_ObjectHideFlags: 0

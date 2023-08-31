@@ -2,6 +2,10 @@ using UnityEngine;
 using MxM;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using System.Collections;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
+using Unity.Mathematics;
 
 public class WeaponSettings : MonoBehaviour
 {
@@ -38,9 +42,31 @@ public class WeaponSettings : MonoBehaviour
             }
             Vector3 direction = other.gameObject.transform.position - weaponHolder.transform.position;
             direction.y = 0;
-            other.gameObject.GetComponent<Health>().TakeDamage(damage*attack.attackDamag[attack.currentEventId], stun*attack.attackStuns[attack.currentEventId], uped*attack.attackUpeds[attack.currentEventId]);
-            other.gameObject.GetComponent<CharacterController>().Move(direction.normalized * attack.attackPushs[attack.currentEventId] * 0.2f);
-        }  
+            other.gameObject.GetComponent<Health>().TakeDamage(damage * attack.attackDamag[attack.currentEventId], stun * attack.attackStuns[attack.currentEventId], uped * attack.attackUpeds[attack.currentEventId]);
+            StartCoroutine(WaitForAttackAnimEnd(direction, other));
+        }
+    }
+
+    IEnumerator WaitForAttackAnimEnd(Vector3 direction, Collider other)
+    {
+        while (!attack.currentEventState.Equals("FollowThrough"))
+        {
+            yield return null;
+        }
+
+        int eventId = attack.currentEventId;
+        float targetPush = attack.attackPushs[eventId];
+        float currentPush = 0;
+        while (currentPush < targetPush)
+        {
+            currentPush += Time.deltaTime * 10;
+            CharacterController otherController = other.gameObject.GetComponent<CharacterController>();
+            if (otherController)
+            {
+                otherController.Move(direction.normalized * currentPush * 0.01f);
+                yield return null;
+            }
+        }
     }
 
 }

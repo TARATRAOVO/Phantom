@@ -26,6 +26,7 @@ public class PlayerAttack : Attack
     public GameObject enemy = null;
     private bool phantomAttack = false;
     private GameObject phantom = null;
+    private bool phantomIsNight = false;
     private float phantomAttackTimeLeft = 0;
     private GameObject tempPhantom = null;
     private bool AttackTrigger = false;
@@ -43,7 +44,6 @@ public class PlayerAttack : Attack
         player = GameObject.FindGameObjectWithTag("Player");
         mmSeriesAttackLeft = new List<MxMEventDefinition>(mmSeriesAttack);
         phantomAttackTimeLeft = phantomAttackTime;
-        // weaponMeshCollider = GameObject.FindGameObjectWithTag("Weapon").GetComponentInChildren<MeshCollider>();
         cameraLookAtController = GameObject.FindGameObjectWithTag("CameraLookAt").GetComponent<CameraControl>();
         enemyAnimationController = enemy.GetComponent<BossAnimationController>();
     }
@@ -156,6 +156,7 @@ public class PlayerAttack : Attack
             tempPhantom = Instantiate(gameObject, this.transform.position, Quaternion.identity);
             tempPhantom.tag = "TempPhantom";
             tempPhantom.GetComponentInChildren<Animator>().enabled = false;
+            skyboxChanger.isNight = phantomIsNight;
             // change the camera's forward direction to the phantom's forward direction
             cameraLookAtController.Yaw = phantom.transform.eulerAngles.y;
 
@@ -179,6 +180,7 @@ public class PlayerAttack : Attack
             // if phantom is not created, create it
             phantom = Instantiate(gameObject, attackLocation, Quaternion.identity);
             phantom.tag = "Phantom";
+            phantomIsNight = skyboxChanger.isNight;
             // cd for phantom attack
             phantomAttackCDLeft = phantomAttackCD;
             // get attack event id when phantom is created
@@ -205,7 +207,6 @@ public class PlayerAttack : Attack
             RefreshPhantomAttack();
             phantomAttackTimeLeft += phantomCounterTime;
             phantomAttack = true;
-
             StartCoroutine(OnPhantomCounter(whichWeapon));
         }
     }
@@ -243,7 +244,6 @@ public class PlayerAttack : Attack
     }
     public void RefreshPhantomAttack()
     {
-        print("RefreshPhantomAttack");
         player.GetComponent<PlayerAttack>().phantomAttackCDLeft = 0;
     }
 }

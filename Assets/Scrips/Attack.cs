@@ -14,11 +14,11 @@ public class Attack : MonoBehaviour
 {
     [HideInInspector] public MxMAnimator mmAnimator;
     public LayerMask targetLayer;
-    private readonly int[] attackEventIDs = { 9, 10, 11, 12, 13, 14, 5, 21, 22, 23, 24, 25, 26, 27 };
-    private readonly float[] attackDamags = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-    private readonly float[] attackStunss = { 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f };
-    private readonly float[] attackUpedss = { 0f, 0f, 1.0f, 0f, 0f, 0f, 0f , 0f, 0f, 0f, 1.0f, 0f, 0f, 0f};
-    private readonly float[] attackPushss = {1.0f, 1.0f, 1.0f, 0f, 1.0f, 1.0f, 1.0f , 1.0f, 1.0f, 0f, 0f, 1.0f, 1.0f, 1.0f};
+    private readonly int[] attackEventIDs = { 9, 10, 11, 12, 13, 14, 5, 21, 22, 23, 24, 25, 26, 27, 28 };
+    private readonly float[] attackDamags = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+    private readonly float[] attackStunss = { 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f };
+    private readonly float[] attackUpedss = { 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f };
+    private readonly float[] attackPushss = { 1.0f, 1.0f, 1.0f, 0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0f, 0f, 1.0f, 1.0f, 1.0f, 1.0f };
     public Dictionary<int, float> attackDamag;
     public Dictionary<int, float> attackStuns;
     public Dictionary<int, float> attackUpeds;
@@ -29,6 +29,8 @@ public class Attack : MonoBehaviour
     public int currentEventId;
     [HideInInspector] public List<Collider> weaponColliders;
     [HideInInspector] public List<SkinnedMeshRenderer> weaponMeshRenderers;
+    [HideInInspector] public GameObject myEventController;
+    [HideInInspector] public SkyboxChanger skyboxChanger;
     protected virtual void Start()
     {
         attackDamag = new Dictionary<int, float>();
@@ -36,6 +38,8 @@ public class Attack : MonoBehaviour
         attackUpeds = new Dictionary<int, float>();
         attackPushs = new Dictionary<int, float>();
         mmAnimator = GetComponent<MxMAnimator>();
+        myEventController = GameObject.FindGameObjectWithTag("MyEventController");
+        skyboxChanger = myEventController.GetComponent<SkyboxChanger>();
         IniAttactProperty();
         IniWeaponCollider();
     }

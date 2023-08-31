@@ -12,6 +12,8 @@ TagManager:
   - BossWeapon
   - Phantom
   - TempPhantom
+  - BossPhantom
+  - MyEventController
   layers:
   - Default
   - TransparentFX

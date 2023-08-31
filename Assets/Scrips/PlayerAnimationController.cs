@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerAnimationController : AnimationController
 {
     public GameObject enemy;
+    private Camera mainCamera;
     protected override void Start()
     {
         base.Start();
         enemy = GameObject.FindGameObjectWithTag("Enemy");
+        mainCamera = Camera.main;
     }
     protected override void Update()
     {
@@ -21,6 +23,7 @@ public class PlayerAnimationController : AnimationController
 
         if ((Input.GetKeyDown(KeyCode.Space) && IsInputAxis()) && isEvadeAnimEnd)
         {
+            LookAtInput();
             OnEvadeForward();
         }
         if (Input.GetKeyDown(KeyCode.Space) && isEvadeAnimEnd)
@@ -44,6 +47,15 @@ public class PlayerAnimationController : AnimationController
         }
         attackLookAt.y = 0;
         transform.forward = attackLookAt;
+    }
+
+    void LookAtInput()
+    {
+        // transform input direction to world space by main camera
+        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 inputDirectionWorldSpace = mainCamera.transform.TransformDirection(inputDirection);
+        inputDirectionWorldSpace.y = 0;
+        transform.forward = inputDirectionWorldSpace;
     }
 
     public bool IsInputAxis()

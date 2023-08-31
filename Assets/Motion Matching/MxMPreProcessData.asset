@@ -174,12 +174,12 @@ MonoBehaviour:
   Events:
   - EventId: 16
     EventName: PlayerEvadeForward
-    EventTime: 0.6428877
-    Windup: 0
+    EventTime: 0.52696127
+    Windup: 0.018171072
     Actions:
-    - 0.6428877
-    FollowThrough: 0.027273893
-    Recovery: 1.0286114
+    - 0.5087902
+    FollowThrough: 0.0666278
+    Recovery: 1.2730777
     Contacts:
     - Position: {x: 0, y: 0, z: 0}
       RotationY: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   - EventId: 14
     EventName: PlayerAttackQTE
     EventTime: 3.5291388
-    Windup: 0.5421214
+    Windup: 0.5421213
     Actions:
     - 1.2870181
     FollowThrough: 0.52158093
@@ -1544,12 +1544,12 @@ MonoBehaviour:
   Events:
   - EventId: 17
     EventName: PlayerEvadeBackward
-    EventTime: 0.9479659
-    Windup: 0.09094924
+    EventTime: 0.79221374
+    Windup: 0.021632254
     Actions:
-    - 0.8570167
+    - 0.7705815
     FollowThrough: 0.03848332
-    Recovery: 0.34688413
+    Recovery: 0.5026363
     Contacts:
     - Position: {x: 0, y: 0, z: 0}
       RotationY: 0
