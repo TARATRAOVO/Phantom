@@ -10,6 +10,7 @@ public class AnimationController : MonoBehaviour
 {
     public Health health;
     public MxMAnimator mmAnimator;
+    public float originAnimPlaybackSpeed = 0.7f;
     public bool isDeathAnimEnd = false;
     public bool isEvadeAnimEnd = true;
     public bool isEvadeState = false;
@@ -72,7 +73,7 @@ public class AnimationController : MonoBehaviour
     }
     public void OnBeHit()
     {
-        if (isEvadeState || isUped || isKnockDown)
+        if (isEvadeState || isUped || isKnockDown || health.isDead)
         {
             return;
         }
@@ -81,7 +82,7 @@ public class AnimationController : MonoBehaviour
 
     public void TickState()
     {
-        if (mmAnimator.CurrentEventState.ToString() == "FollowThrough")
+        if (mmAnimator.CurrentEventState.Equals(EEventState.FollowThrough))
         {
             isKnockDown = false;
             isUped = false;

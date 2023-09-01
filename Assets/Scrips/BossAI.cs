@@ -7,10 +7,10 @@ public class BossAI : MonoBehaviour
 {
     private NavMeshAgent agent;
     private BossAttack bossAttack;
-    private bool isAttacking;
+    public bool isAttacking;
     public GameObject player;
     // distance between player and boss
-    private float bossPlayerDistance;
+    public float bossPlayerDistance;
     public bool isMoving;
     protected void Awake()
     {
@@ -42,12 +42,12 @@ public class BossAI : MonoBehaviour
             isAttacking = false;
         }
 
-        if (bossPlayerDistance < 2.0f && isAttacking == false)
-        {
-            isAttacking = true;
-            bossAttack.OnBossAttack();
-            return;
-        }
+        // if (bossPlayerDistance < 2.0f && isAttacking == false)
+        // {
+        //     isAttacking = true;
+        //     bossAttack.OnBossAttack();
+        //     return;
+        // }
 
         // if (bossPlayerDistance > 10.0f && isAttacking == false)
         // {

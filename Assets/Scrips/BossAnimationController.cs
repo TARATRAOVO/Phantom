@@ -9,12 +9,14 @@ using UnityEngine.AI;
 public class BossAnimationController : AnimationController
 {
     public MxMEventDefinition hitUpEvent;
+
     public MxMEventDefinition hitInAirEvent;
     public MxMEventDefinition knockDownEvent;
-    [HideInInspector]public BossAI bossAI;
-    [HideInInspector]public NavMeshAgent agent;
+    [HideInInspector] public BossAI bossAI;
+    [HideInInspector] public NavMeshAgent agent;
+    private bool currentUpState;
     private float originY;
-    
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -23,20 +25,25 @@ public class BossAnimationController : AnimationController
         agent = GetComponent<NavMeshAgent>();
         bossAI = GetComponent<BossAI>();
         originY = this.transform.position.y;
+        mmAnimator.PlaybackSpeed = originAnimPlaybackSpeed;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        if (currentUpState != isUped)
+        {
+            OnBossUped();
+            currentUpState = isUped;
+        }
+
         if (isUped)
         {
-            this.transform.position = new Vector3(this.transform.position.x, 1.2f, this.transform.position.z);
-            mmAnimator.PlaybackSpeed = 0.5f;
+            this.transform.position = new Vector3(this.transform.position.x, 1.2f, this.transform.position.z); 
         }
         else
         {
             math.lerp(this.transform.position.y, originY, 0.01f);
-            mmAnimator.PlaybackSpeed = 0.7f;
         }
 
 
@@ -58,17 +65,18 @@ public class BossAnimationController : AnimationController
 
     public void OnBossUped()
     {
-        if (isKnockDown)
+        if (isKnockDown && !health.isDead)
         {
             mmAnimator.BeginEvent(hitUpEvent);
             bossAI.isMoving = false;
             isUped = true;
+            mmAnimator.PlaybackSpeed = 0.5f;
         }
     }
 
     public void OnBossHitInAir()
     {
-        if (isUped)
+        if (isUped && !health.isDead)
         {
             mmAnimator.BeginEvent(hitInAirEvent);
             bossAI.isMoving = false;
@@ -78,9 +86,13 @@ public class BossAnimationController : AnimationController
 
     public void OnBossKnockDown()
     {
-        mmAnimator.BeginEvent(knockDownEvent);
-        bossAI.isMoving = false;
-        isKnockDown = true;
+        if (!health.isDead)
+        {
+            mmAnimator.BeginEvent(knockDownEvent);
+            bossAI.isMoving = false;
+            isKnockDown = true;
+        }
+
     }
 
     public void BossTickState()
@@ -89,5 +101,11 @@ public class BossAnimationController : AnimationController
         {
             bossAI.isMoving = true;
         }
+    }
+
+    public void OnBossUpedEnd()
+    {
+        OnBossKnockDown();
+        mmAnimator.PlaybackSpeed = originAnimPlaybackSpeed;
     }
 }

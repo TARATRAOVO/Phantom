@@ -10,7 +10,6 @@ public class FrameFreeze : MonoBehaviour
 
     public void FreezeFrame()
     {
-        print("FreezeFrame");
         StartCoroutine(FreezeFrameIE());
     }
      IEnumerator FreezeFrameIE()

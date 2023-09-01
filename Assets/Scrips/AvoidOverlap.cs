@@ -23,6 +23,7 @@ public class AvoidOverlap : MonoBehaviour
         {
             // 计算分离方向
             Vector3 pushDirection = (transform.position - toAvoid.transform.position).normalized;
+            pushDirection.y = 0;
             // 移动角色
             characterController.Move(pushDirection * 1 * Time.deltaTime);
         }

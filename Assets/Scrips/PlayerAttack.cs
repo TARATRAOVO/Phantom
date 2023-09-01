@@ -26,7 +26,7 @@ public class PlayerAttack : Attack
     public GameObject enemy = null;
     private bool phantomAttack = false;
     private GameObject phantom = null;
-    private bool phantomIsNight = false;
+    public bool phantomIsNight = false;
     private float phantomAttackTimeLeft = 0;
     private GameObject tempPhantom = null;
     private bool AttackTrigger = false;
@@ -35,31 +35,46 @@ public class PlayerAttack : Attack
     // how long the button is pressed
     private float pressedTime = 0;
     public float phantomAttackCDLeft = 0;
-    private GameObject player;
+
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        player = GameObject.FindGameObjectWithTag("Player");
         mmSeriesAttackLeft = new List<MxMEventDefinition>(mmSeriesAttack);
         phantomAttackTimeLeft = phantomAttackTime;
         cameraLookAtController = GameObject.FindGameObjectWithTag("CameraLookAt").GetComponent<CameraControl>();
         enemyAnimationController = enemy.GetComponent<BossAnimationController>();
     }
 
+
+
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            RefreshPhantomAttack();
-        }
 
         if (currentEventId == 0)
         {
             mmSeriesAttackLeft = new List<MxMEventDefinition>(mmSeriesAttack);
+        }
+
+        if (this.tag == "Phantom")
+        {
+            if (phantomIsNight == skyboxChanger.isNight)
+            {
+                foreach (SkinnedMeshRenderer meshRenderer in thisMeshRenderers)
+                {
+                    meshRenderer.enabled = true;
+                }
+            }
+            else
+            {
+                foreach (SkinnedMeshRenderer meshRenderer in thisMeshRenderers)
+                {
+                    meshRenderer.enabled = false;
+                }
+            }
         }
 
 
@@ -178,9 +193,9 @@ public class PlayerAttack : Attack
         if (phantomAttackCDLeft <= 0)
         {
             // if phantom is not created, create it
+            phantomIsNight = skyboxChanger.isNight;
             phantom = Instantiate(gameObject, attackLocation, Quaternion.identity);
             phantom.tag = "Phantom";
-            phantomIsNight = skyboxChanger.isNight;
             // cd for phantom attack
             phantomAttackCDLeft = phantomAttackCD;
             // get attack event id when phantom is created

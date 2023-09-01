@@ -9,8 +9,8 @@ public class Health : MonoBehaviour
     public float maxStunValue = 100f;
     public float maxUpValue = 100f;
     [HideInInspector]public bool isDead = false;
-    [HideInInspector]public bool isStuned = false;
-    [HideInInspector]public bool isUped = false;
+    [HideInInspector]private bool boolStunded = false;
+    [HideInInspector]private bool boolUped = false;
     public float currentHealth;
     public float currentStunValue;
     public float currentUpValue;
@@ -32,20 +32,22 @@ public class Health : MonoBehaviour
         {
             isDead = true;
         }
+
         if (currentStunValue <= 0)
         {
-            isStuned = true;
+            boolStunded = true;
             OnStuned.Invoke();
         }
         currentStunValue = maxStunValue;
-        isStuned = false;
+        boolStunded = false;
+
         if (currentUpValue <= 0)
         {
-            isUped = true;
+            boolUped = true;
             OnUped.Invoke();
         }
         currentUpValue = maxUpValue;
-        isUped = false;
+        boolUped = false;
 
     }
     // take damage

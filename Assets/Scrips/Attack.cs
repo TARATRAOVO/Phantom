@@ -14,6 +14,7 @@ public class Attack : MonoBehaviour
 {
     [HideInInspector] public MxMAnimator mmAnimator;
     public LayerMask targetLayer;
+    protected GameObject player;
     private readonly int[] attackEventIDs = { 9, 10, 11, 12, 13, 14, 5, 21, 22, 23, 24, 25, 26, 27, 28 };
     private readonly float[] attackDamags = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
     private readonly float[] attackStunss = { 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f };
@@ -31,6 +32,9 @@ public class Attack : MonoBehaviour
     [HideInInspector] public List<SkinnedMeshRenderer> weaponMeshRenderers;
     [HideInInspector] public GameObject myEventController;
     [HideInInspector] public SkyboxChanger skyboxChanger;
+    [HideInInspector] public AnimationController animationController;
+    [HideInInspector] public float originAnimPlaybackSpeed;
+    protected SkinnedMeshRenderer[] thisMeshRenderers;
     protected virtual void Start()
     {
         attackDamag = new Dictionary<int, float>();
@@ -40,6 +44,10 @@ public class Attack : MonoBehaviour
         mmAnimator = GetComponent<MxMAnimator>();
         myEventController = GameObject.FindGameObjectWithTag("MyEventController");
         skyboxChanger = myEventController.GetComponent<SkyboxChanger>();
+        thisMeshRenderers = this.GetComponentsInChildren<SkinnedMeshRenderer>();
+        animationController = GetComponent<AnimationController>();
+        originAnimPlaybackSpeed = animationController.originAnimPlaybackSpeed;
+        player = GameObject.FindGameObjectWithTag("Player");
         IniAttactProperty();
         IniWeaponCollider();
     }
@@ -127,6 +135,13 @@ public class Attack : MonoBehaviour
             weaponColliders.AddRange(weapon.GetComponentsInChildren<Collider>());
             weaponMeshRenderers.AddRange(weapon.GetComponentsInChildren<SkinnedMeshRenderer>());
         }
+    }
+
+    public void LookAtTarget(GameObject targetObject)
+    {
+        Vector3 lookAtPosition = targetObject.transform.position;
+        lookAtPosition.y = this.transform.position.y;
+        this.transform.LookAt(lookAtPosition);
     }
 
 }
