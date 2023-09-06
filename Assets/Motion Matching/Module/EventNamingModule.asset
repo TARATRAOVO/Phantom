@@ -42,3 +42,8 @@ MonoBehaviour:
   - BossCombo3
   - BossCombo4
   - BossPhantomAttack
+  - BossEvadeBackward
+  - BossEvadeForward
+  - BossFastAttack
+  - BossEvadeBackward1
+  - BossInvisibleAttack

@@ -6,14 +6,13 @@ public class SkyboxChanger : MonoBehaviour
     public bool isNight = false;
     public Material skyboxDay;
     public Material skyboxNight;
-    private int index = 0;
 
-    void Start()
+    protected void Start()
     {
         RenderSettings.skybox = skyboxDay;
     }
      
-    void Update()
+    protected void Update()
     {
         if (isNight)
         {

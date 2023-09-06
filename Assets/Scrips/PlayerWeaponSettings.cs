@@ -10,4 +10,12 @@ public class PlayerWeaponSettings : WeaponSettings
         base.Awake();
     }
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (weaponHolder.tag == "Player")
+        {
+            base.OnTriggerEnter(other);
+        }
+    }
+
 }

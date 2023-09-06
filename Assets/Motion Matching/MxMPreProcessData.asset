@@ -321,7 +321,7 @@ MonoBehaviour:
   - EventId: 14
     EventName: PlayerAttackQTE
     EventTime: 3.5291388
-    Windup: 0.5421213
+    Windup: 0.5421214
     Actions:
     - 1.2870181
     FollowThrough: 0.52158093
@@ -1252,12 +1252,12 @@ MonoBehaviour:
   Events:
   - EventId: 19
     EventName: PlayerBeHit
-    EventTime: 1.0154586
-    Windup: 0.030261993
+    EventTime: 0.14879203
+    Windup: 0.034666665
     Actions:
-    - 0.9851966
+    - 0.11412536
     FollowThrough: 0.02353704
-    Recovery: 0.011004448
+    Recovery: 0.877671
     Contacts:
     - Position: {x: 0, y: 0, z: 0}
       RotationY: 0

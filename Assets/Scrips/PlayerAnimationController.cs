@@ -7,6 +7,7 @@ public class PlayerAnimationController : AnimationController
 {
     public GameObject enemy;
     private Camera mainCamera;
+
     protected override void Start()
     {
         base.Start();
@@ -16,19 +17,27 @@ public class PlayerAnimationController : AnimationController
     protected override void Update()
     {
         base.Update();
+
+        if (tag != "Player")
+        {
+            return;
+        }
+
         if (isDeathAnimEnd)
         {
             OnPlayerDeathAnimEnd();
         }
 
-        if ((Input.GetKeyDown(KeyCode.Space) && IsInputAxis()) && isEvadeAnimEnd)
+        if ((Input.GetKeyDown(KeyCode.Space) && IsInputAxis()) && isEvadeAnimEnd && health.isDead == false)
         {
             LookAtInput();
+            print("space");
             OnEvadeForward();
         }
-        if (Input.GetKeyDown(KeyCode.Space) && isEvadeAnimEnd)
+        if (Input.GetKeyDown(KeyCode.Space) && isEvadeAnimEnd && health.isDead == false)
         {
-            LookAtEnemy();
+            print("space");
+            LookAtInput();
             OnEvadeBackward();
         }
     }
@@ -36,6 +45,16 @@ public class PlayerAnimationController : AnimationController
     void OnPlayerDeathAnimEnd()
     {
         mmAnimator.enabled = false;
+    }
+
+    public void OnPlayerBeHit()
+    {
+        OnBeHit();
+        if (isEvadeState || isUped || isKnockDown || health.isDead || this.tag != "Player")
+        {
+            return;
+        }
+        LookAtEnemy();
     }
 
     void LookAtEnemy() // if there is an enemy, look at the enemy
@@ -62,6 +81,6 @@ public class PlayerAnimationController : AnimationController
     {
         return (Math.Abs((Input.GetAxis("Vertical"))) > 0 || Math.Abs((Input.GetAxis("Horizontal"))) > 0);
     }
-    
+
 
 }

@@ -1,11 +1,6 @@
 using UnityEngine;
-using MxM;
-using UnityEngine.AI;
 using UnityEngine.Events;
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
-using Unity.Mathematics;
 
 public class WeaponSettings : MonoBehaviour
 {
@@ -30,42 +25,49 @@ public class WeaponSettings : MonoBehaviour
     }
 
     // damage the target layer
-    public void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (targetLayer == (targetLayer | (1 << other.gameObject.layer)))
         {
+            Transform target = other.transform.root;
             onHitTarget.Invoke();
-            if (other.gameObject.GetComponent<AnimationController>().isEvadeState)
+            if (target.GetComponent<AnimationController>().isEvadeState)
             {
                 onHitEvade.Invoke();
                 return;
             }
             Vector3 direction = other.gameObject.transform.position - weaponHolder.transform.position;
             direction.y = 0;
-            other.gameObject.GetComponent<Health>().TakeDamage(damage * attack.attackDamag[attack.currentEventId], stun * attack.attackStuns[attack.currentEventId], uped * attack.attackUpeds[attack.currentEventId]);
-            StartCoroutine(WaitForAttackAnimEnd(direction, other));
+            target.gameObject.GetComponent<Health>().TakeDamage(damage * attack.attackDamag[attack.currentEventId], stun * attack.attackStuns[attack.currentEventId], uped * attack.attackUpeds[attack.currentEventId]);
+            StartCoroutine(WaitForAttackAnimEnd(direction, target));
         }
     }
 
-    IEnumerator WaitForAttackAnimEnd(Vector3 direction, Collider other)
+    IEnumerator WaitForAttackAnimEnd(Vector3 direction, Transform target)
     {
         while (!attack.currentEventState.Equals("FollowThrough"))
         {
             yield return null;
         }
 
-        int eventId = attack.currentEventId;
-        float targetPush = attack.attackPushs[eventId];
+        float targetPush;
+        try
+        {
+            int eventId = attack.currentEventId;
+            targetPush = attack.attackPushs[eventId];
+        }
+        catch
+        {
+            targetPush = 0;
+        }
+
         float currentPush = 0;
+
         while (currentPush < targetPush)
         {
             currentPush += Time.deltaTime * 10;
-            CharacterController otherController = other.gameObject.GetComponent<CharacterController>();
-            if (otherController)
-            {
-                otherController.Move(direction.normalized * currentPush * 0.01f);
-                yield return null;
-            }
+            target.position += direction.normalized * currentPush * 0.01f;
+            yield return null;
         }
     }
 

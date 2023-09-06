@@ -1,15 +1,12 @@
 using UnityEngine;
 using MxM;
 using System.Collections.Generic;
-using UnityEngine.Rendering;
-using System.Linq;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class PlayerAttack : Attack
 {
-    [HideInInspector]
-    public CameraControl cameraLookAtController;
+    public GameObject test;
+    [HideInInspector] public CameraControl cameraLookAtController;
     // how long the button can be pressed
     [Header("Player Attack Settings")]
     public Dictionary<string, int> weaponActionDict;
@@ -32,6 +29,7 @@ public class PlayerAttack : Attack
     private bool AttackTrigger = false;
     private int phantomEventID;
     private BossAnimationController enemyAnimationController;
+    private BossAttack enemyAttack;
     // how long the button is pressed
     private float pressedTime = 0;
     public float phantomAttackCDLeft = 0;
@@ -45,6 +43,7 @@ public class PlayerAttack : Attack
         phantomAttackTimeLeft = phantomAttackTime;
         cameraLookAtController = GameObject.FindGameObjectWithTag("CameraLookAt").GetComponent<CameraControl>();
         enemyAnimationController = enemy.GetComponent<BossAnimationController>();
+        enemyAttack = enemy.GetComponent<BossAttack>();
     }
 
 
@@ -97,6 +96,11 @@ public class PlayerAttack : Attack
     // Check if normal attack button is pressed
     void AttackTick()
     {
+        if (tag == "Phantom")
+        {
+            return;
+        }
+
         EEventState eEventState;
         // heavy attack
         if (Input.GetButton("Fire1"))
@@ -151,24 +155,9 @@ public class PlayerAttack : Attack
             return;
         }
 
-        Vector3 attackLocation;
-        if (enemy)
-        {
-            // behind enemy
-            Vector3 playerLocation = this.transform.position;
-            Vector3 enemyLocation = enemy.transform.position;
-            playerLocation.y = 0;
-            enemyLocation.y = 0;
-            attackLocation = enemyLocation + (enemyLocation - playerLocation).normalized * 1.5f;
-        }
-        else
-        {
-            attackLocation = this.transform.position + this.transform.forward * 2;
-        }
-
         if (phantom)
         {
-            tempPhantom = Instantiate(gameObject, this.transform.position, Quaternion.identity);
+            tempPhantom = Instantiate(gameObject, transform.position, Quaternion.identity);
             tempPhantom.tag = "TempPhantom";
             tempPhantom.GetComponentInChildren<Animator>().enabled = false;
             skyboxChanger.isNight = phantomIsNight;
@@ -176,17 +165,19 @@ public class PlayerAttack : Attack
             cameraLookAtController.Yaw = phantom.transform.eulerAngles.y;
 
             // if phantom is already created, teleport it to the attack location
-            this.transform.position = phantom.transform.position;
-            this.transform.forward = phantom.transform.forward;
+
             if (phantomEventID != 0)
             {
-                this.transform.position = attackLocation;
                 mmAnimator.BeginEvent(phantomEventID);
+                transform.position = CalculateAttackLocation();
                 LookAtEnemy();
             }
-
+            else
+            {
+                transform.position = phantom.transform.position;
+                transform.forward = phantom.transform.forward;
+            }
             Destroy(phantom);
-
             return;
         }
 
@@ -194,7 +185,7 @@ public class PlayerAttack : Attack
         {
             // if phantom is not created, create it
             phantomIsNight = skyboxChanger.isNight;
-            phantom = Instantiate(gameObject, attackLocation, Quaternion.identity);
+            phantom = Instantiate(gameObject, CalculateAttackLocation(), Quaternion.identity);
             phantom.tag = "Phantom";
             // cd for phantom attack
             phantomAttackCDLeft = phantomAttackCD;
@@ -239,12 +230,13 @@ public class PlayerAttack : Attack
             phantomAttackTimeLeft -= Time.deltaTime;
             if (phantomAttackTimeLeft < 0)
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }
     void LookAtEnemy() // if there is an enemy, look at the enemy
     {
+        print(tag + " LookAtEnemy");
         Vector3 attackLookAt = transform.forward;
         if (enemy)
         {
@@ -260,6 +252,25 @@ public class PlayerAttack : Attack
     public void RefreshPhantomAttack()
     {
         player.GetComponent<PlayerAttack>().phantomAttackCDLeft = 0;
+    }
+
+    public Vector3 CalculateAttackLocation()
+    {
+        Vector3 attackLocation;
+        if (enemy && enemyAttack.isVisibleNow)
+        {
+            // behind enemy
+            Vector3 playerLocation = transform.position;
+            Vector3 enemyLocation = enemy.transform.position;
+            playerLocation.y = 0;
+            enemyLocation.y = 0;
+            attackLocation = enemyLocation + (enemyLocation - playerLocation).normalized * 2.0f;
+        }
+        else
+        {
+            attackLocation = transform.position + transform.forward * 2;
+        }
+        return attackLocation;
     }
 }
 

@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    public Health health;
-    public MxMAnimator mmAnimator;
+    [HideInInspector]public Health health;
+    [HideInInspector]public MxMAnimator mmAnimator;
     public float originAnimPlaybackSpeed = 0.7f;
     public bool isDeathAnimEnd = false;
     public bool isEvadeAnimEnd = true;
@@ -22,13 +22,18 @@ public class AnimationController : MonoBehaviour
     public MxMEventDefinition[] evadeBackwardEvents;
     public MxMEventDefinition beHitEvent;
     private bool lastDeathState;
+    private Attack attack;
+    private int lastEventId;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        
         health = GetComponent<Health>();
         mmAnimator = GetComponent<MxMAnimator>();
         lastDeathState = health.isDead;
+        attack = GetComponent<Attack>();
+        lastEventId = attack.currentEventId;
     }
 
     // Update is called once per frame
@@ -39,24 +44,30 @@ public class AnimationController : MonoBehaviour
         if (health.isDead && !lastDeathState)
         {
             OnDeath();
+            attack.enabled = false;
             lastDeathState = health.isDead;
         };
 
-        if (health.isDead && mmAnimator.CurrentEventState.ToString() == "FollowThrough")
+        if (health.isDead && mmAnimator.CurrentEventState.Equals(EEventState.FollowThrough))
         {
             isDeathAnimEnd = true;
         }
 
-        if (mmAnimator.CurrentEventState.ToString() == "FollowThrough")
+        if (mmAnimator.CurrentEventState.Equals(EEventState.FollowThrough))
         {
             isEvadeAnimEnd = true;
         }
 
-
+        // OnEventComplete
+        if (lastEventId != attack.currentEventId && lastEventId != 0)
+        {
+        }
+        lastEventId = attack.currentEventId;
     }
     public void OnDeath()
     {
         mmAnimator.BeginEvent(deathEvents[0]);
+        isDeathAnimEnd = false;
     }
 
     public void OnEvadeForward()
@@ -90,7 +101,7 @@ public class AnimationController : MonoBehaviour
 
     }
 
-    IEnumerator Evade()
+    public IEnumerator Evade()
     {
         isEvadeState = true;
         yield return new WaitForSeconds(evadeTime);

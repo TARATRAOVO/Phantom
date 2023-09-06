@@ -15,11 +15,11 @@ public class Attack : MonoBehaviour
     [HideInInspector] public MxMAnimator mmAnimator;
     public LayerMask targetLayer;
     protected GameObject player;
-    private readonly int[] attackEventIDs = { 9, 10, 11, 12, 13, 14, 5, 21, 22, 23, 24, 25, 26, 27, 28 };
-    private readonly float[] attackDamags = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
-    private readonly float[] attackStunss = { 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f };
-    private readonly float[] attackUpedss = { 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f };
-    private readonly float[] attackPushss = { 1.0f, 1.0f, 1.0f, 0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0f, 0f, 1.0f, 1.0f, 1.0f, 1.0f };
+    public readonly int[] attackEventIDs = { 9, 10, 11, 12, 13, 14, 5, 21, 22, 23, 24, 25, 26, 27, 28 , 31};
+    private readonly float[] attackDamags = { 0.5f, 0.5f, 0.5f, 0.5f, 1.0f, 1.3f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f , 1.0f};
+    private readonly float[] attackStunss = { 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f , 0f};
+    private readonly float[] attackUpedss = { 0f, 0f, 1.0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1.0f, 0f, 0f, 0f, 0f , 0f};
+    private readonly float[] attackPushss = { 1.0f, 1.0f, 1.0f, 0f, 1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0f, 0f, 1.0f, 1.0f, 1.0f, 1.0f,0f };
     public Dictionary<int, float> attackDamag;
     public Dictionary<int, float> attackStuns;
     public Dictionary<int, float> attackUpeds;
@@ -143,5 +143,7 @@ public class Attack : MonoBehaviour
         lookAtPosition.y = this.transform.position.y;
         this.transform.LookAt(lookAtPosition);
     }
+
+    
 
 }
